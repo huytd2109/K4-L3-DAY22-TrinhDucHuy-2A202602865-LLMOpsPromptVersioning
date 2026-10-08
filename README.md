@@ -1,3 +1,20 @@
+# Bài lab cá nhân — Trịnh Đức Huy — 2A202602865
+
+- GitHub: [K4-L3-DAY22-TrinhDucHuy-2A202602865-LLMOpsPromptVersioning](https://github.com/huytd2109/K4-L3-DAY22-TrinhDucHuy-2A202602865-LLMOpsPromptVersioning).
+- LangSmith: [project day22-lab](https://smith.langchain.com/o/08ea435c-a668-471b-9a2c-75d8136ebc0f/projects/p/a4df368c-ae74-4eca-8aef-12c8ff84550d).
+- Bộ nộp gồm 7 file bắt buộc trong [evidence/](evidence/); kết quả, phân tích và cách kiểm chứng ở [evidence/README.md](evidence/README.md).
+- Log tổng hợp được giữ local ở `.local_artifacts/run_all_final_log.txt`; câu trả lời và điểm từng mẫu ở `data/ragas_details/`. Các thư mục này, virtualenv và `.env` được Git ignore.
+
+Chạy toàn bộ từ thư mục gốc trên Windows:
+
+```powershell
+$env:PYTHONUTF8 = "1"
+$env:RAGAS_DO_NOT_TRACK = "true"
+.\venv\Scripts\python.exe -X utf8 -u src/run_all.py
+```
+
+Tài liệu và quy định gốc của bài lab được giữ bên dưới.
+
 > **📌 Hình thức: BÀI CÁ NHÂN** — mỗi học viên tự làm và tự nộp 1 repo theo quy ước đặt tên.
 > **⏰ Thời lượng:** ~3–4 giờ · **Deadline:** 23:59 ngày học lab (GMT+7)
 >

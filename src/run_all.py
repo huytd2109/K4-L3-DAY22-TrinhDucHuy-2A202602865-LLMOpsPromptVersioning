@@ -69,6 +69,8 @@ def main():
         title = STEPS[step_num][0]
         status = "✅ PASS" if success else "❌ FAIL"
         print(f"  {status}  {title}")
+    if not all(results.values()):
+        sys.exit(1)
 
 
 if __name__ == "__main__":
