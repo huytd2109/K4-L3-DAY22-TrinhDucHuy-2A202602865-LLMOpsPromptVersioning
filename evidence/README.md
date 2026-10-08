@@ -36,7 +36,7 @@ Validator trả `FailResult(fix_value=...)` khi cần sửa; `OnFailAction.FIX` 
 
 ## Bộ nộp và dữ liệu local
 
-Thư mục này chỉ giữ 7 file bắt buộc theo `SUBMISSION.md` và README phân tích. Log/debug bổ sung được chuyển vào `.local_artifacts/`; câu trả lời và điểm từng mẫu ở `data/ragas_details/`, đều được Git ignore. `.env` và virtualenv cũng không được đưa vào bộ nộp; tài liệu đề bài gốc được giữ nguyên.
+Thư mục này giữ 7 file bắt buộc theo `SUBMISSION.md`, ảnh 100 traces bổ sung theo yêu cầu và README phân tích. Log/debug được chuyển vào `.local_artifacts/`; câu trả lời và điểm từng mẫu ở `data/ragas_details/`, đều được Git ignore. `.env` và virtualenv cũng không được đưa vào bộ nộp; tài liệu đề bài gốc được giữ nguyên.
 
 `03_ragas_scores.png` chụp trực tiếp log console gốc mở bằng Playwright; văn bản hiển thị được đối chiếu khớp file log. Đây là ảnh log trong trình duyệt, không phải cửa sổ terminal Windows vì công cụ chụp native lỗi.
 
