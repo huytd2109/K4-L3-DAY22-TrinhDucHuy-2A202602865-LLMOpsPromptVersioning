@@ -1,12 +1,4 @@
-# Bằng chứng bài lab Day 22 — Trịnh Đức Huy
 
-Lần kiểm tra cuối ngày 08/10/2026 chạy mới cả bốn bước bằng `src/run_all.py`: **4/4 PASS, exit code 0**. Model tạo câu trả lời và evaluator: `gpt-4o-mini`; embeddings: `text-embedding-3-small`; RAGAS `0.4.3`; Guardrails `0.11.0`. Chunk size 500, overlap 50, truy xuất k=3.
-
-## RAG và Prompt Hub
-
-LangSmith API xác nhận riêng lần chạy cuối có 50 `rag-query` và 50 `ab-rag-query`, đều hoàn tất không lỗi. Trace mẫu chứa retriever, prompt, LLM, parser và 3 đoạn context.
-
-Hai prompt là `trinh-duc-huy-rag-prompt-v1` và `trinh-duc-huy-rag-prompt-v2`. Cả hai được pull từ Hub, không dùng fallback local. Routing MD5 cho `req-0000`–`req-0049` vẫn là **V1=19, V2=31**. Khi push lại prompt không đổi, Hub trả `409 Nothing to commit`; đây không phải lỗi pull. `02_ab_routing_log.txt` giữ log lần push đầu thành công và đủ 50 nhãn routing.
 
 ## RAGAS — kết quả lần chạy cuối
 
@@ -27,26 +19,3 @@ Cả 50 câu dùng context giống nhau giữa V1/V2. Chênh lệch context prec
 - [Answer relevancy](https://docs.ragas.io/en/latest/concepts/metrics/available_metrics/answer_relevance/): độ liên quan với câu hỏi, dựa trên embedding của các câu hỏi sinh ngược từ câu trả lời.
 - [Context recall](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_recall/): mức thông tin trong đáp án chuẩn được context bao phủ.
 - [Context precision](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision/): mức các context liên quan được xếp ở vị trí cao.
-
-## Guardrails
-
-Hai log demo được lưu từ cùng một lần chạy thực tế: **PII 6/6, JSON 5/5**. PII gồm email, phone, SSN, credit card, nhiều PII và case sạch. JSON gồm hợp lệ, markdown fences, nháy đơn, dấu phẩy thừa và JSON không sửa được.
-
-Validator trả `FailResult(fix_value=...)` khi cần sửa; `OnFailAction.FIX` thay output bằng giá trị đó. `PassResult()` giữ nguyên input sạch. `on_fail` được truyền vào constructor validator để cấu hình cách xử lý lỗi; `Guard.use()` gắn instance đã cấu hình. JSON không sửa được vẫn trả JSON dự phòng có `error` và tối đa 200 ký tự `raw`. Demo kiểm tra output thật trước khi báo thành công. Cảnh báo exporter telemetry của Guardrails không ảnh hưởng các kết quả này.
-
-## Bộ nộp và dữ liệu local
-
-Thư mục này giữ 7 file bắt buộc theo `SUBMISSION.md`, ảnh 100 traces bổ sung theo yêu cầu và README phân tích. Log/debug được chuyển vào `.local_artifacts/`; câu trả lời và điểm từng mẫu ở `data/ragas_details/`, đều được Git ignore. `.env` và virtualenv cũng không được đưa vào bộ nộp; tài liệu đề bài gốc được giữ nguyên.
-
-`03_ragas_scores.png` chụp trực tiếp log console gốc mở bằng Playwright; văn bản hiển thị được đối chiếu khớp file log. Đây là ảnh log trong trình duyệt, không phải cửa sổ terminal Windows vì công cụ chụp native lỗi.
-
-Chạy toàn bộ từ thư mục gốc:
-
-```powershell
-$env:PYTHONUTF8 = "1"
-$env:RAGAS_DO_NOT_TRACK = "true"
-.\venv\Scripts\python.exe -X utf8 -u src/run_all.py
-Copy-Item data/ragas_report.json evidence/03_ragas_report.json
-```
-
-Để tiếp tục phần chấm sau lỗi kết nối: `src/03_ragas_evaluation.py --resume`, chỉ dùng với cùng QA, knowledge base, prompt và dữ liệu câu trả lời đã lưu. Chế độ này kiểm tra các trường dữ liệu khớp cache, chấm lại ô lỗi và yêu cầu đủ điểm hợp lệ trước khi tính trung bình.
